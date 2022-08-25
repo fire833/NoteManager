@@ -16,31 +16,44 @@
 *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package main
+package commands
 
 import (
-	"fmt"
-	"os"
-
-	"github.com/fire833/notemanager/cmd/nm/commands"
 	"github.com/fire833/notemanager/pkg"
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
 
-var (
-	Version   string = "unknown"
-	Commit    string = "unknown"
-	BuildTime string = "unknown"
-)
-
-func init() {
-	pkg.Version = Version
-	pkg.Commit = Commit
-	pkg.BuildTime = BuildTime
+type newCmdOpts struct {
+	debug *bool
 }
 
-func main() {
-	if e := commands.NMCmd.Execute(); e != nil {
-		fmt.Print(e)
-		os.Exit(1)
+var (
+	newCmd *cobra.Command = &cobra.Command{
+		Use:     "new [class]",
+		Aliases: []string{"nm"},
+		Short:   "Create a new note in the specified class",
+		Version: pkg.VersionStr,
+		Long: `
+`,
+		SuggestFor: []string{},
+		RunE:       newExec,
 	}
+
+	newOpts *newCmdOpts
+)
+
+func newExec(cmd *cobra.Command, args []string) error {
+	return nil
+}
+
+func init() {
+	set := pflag.NewFlagSet(newCmd.Short, pflag.ExitOnError)
+
+	o := &newCmdOpts{
+		debug: set.BoolP("debug", "d", false, "Specify whether to run this command in debug mode. This means outputs should not be used, but analysed for debugging purposes."),
+	}
+
+	NMCmd.Flags().AddFlagSet(set)
+	newOpts = o
 }

@@ -15,3 +15,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+# Tool lookup
+GO			:=		$(shell which go)
+
+.PHONY: binary
+binary:
+	${GO} build -o bin/nm -ldflags "-X 'main.Version=${VERSION}' -X 'main.Commit=${COMMIT}' -X 'main.BuildTime=${DATE}'" cmd/nm/main.go
