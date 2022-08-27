@@ -16,33 +16,22 @@
 *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package templates
+package course
 
-import (
-	"embed"
-	"text/template"
-	"time"
+import "time"
 
-	"github.com/Masterminds/sprig/v3"
-)
+type CourseContext struct {
 
-//go:embed templates/*
-var note embed.FS
+	// Title is the title of this course that the notes are a part of.
+	Title string
 
-var (
-	noteTmpl *template.Template = template.Must(
-		template.New("note").Funcs(sprig.TxtFuncMap()).ParseFS(note, "templates/*"))
-)
-
-// NoteContext is the context given to the NOte template to be used
-type noteContext struct {
-	CourseName string
-
+	// Lecturer is the professor/teacher/speaker who the notes are taken off of.
 	Lecturer string
 
-	Author string
+	// Author is the person who wrote these notes.
+	Author string `json:"author" yaml:"author"`
 
-	Year string
-
-	TimeGenerated time.Time
+	// StartDate describes the starting time for this course, and the time that note titles
+	// will be determined from.
+	StartDate time.Time `json:"courseStart" yaml:"courseStart"`
 }

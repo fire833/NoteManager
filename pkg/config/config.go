@@ -16,33 +16,15 @@
 *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package templates
+package config
 
 import (
-	"embed"
-	"text/template"
-	"time"
+	"os"
+	"path/filepath"
 
-	"github.com/Masterminds/sprig/v3"
+	"github.com/spf13/viper"
 )
 
-//go:embed templates/*
-var note embed.FS
-
-var (
-	noteTmpl *template.Template = template.Must(
-		template.New("note").Funcs(sprig.TxtFuncMap()).ParseFS(note, "templates/*"))
-)
-
-// NoteContext is the context given to the NOte template to be used
-type noteContext struct {
-	CourseName string
-
-	Lecturer string
-
-	Author string
-
-	Year string
-
-	TimeGenerated time.Time
+func init() {
+	viper.AddConfigPath(filepath.Join(os.Getenv("HOME"), ".config", "nm"))
 }

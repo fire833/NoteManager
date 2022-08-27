@@ -24,31 +24,33 @@ import (
 	"github.com/spf13/pflag"
 )
 
-type newCmdOpts struct {
+type addCmdOpts struct {
 	debug *bool
 }
 
 var (
-	newCmd *cobra.Command = &cobra.Command{
-		Use:     "new [class]",
-		Aliases: []string{"nm"},
-		Short:   "Create a new note in the specified class",
+	addCmd *cobra.Command = &cobra.Command{
+		Use:     "add",
+		Aliases: []string{"a"},
+		Short:   "Add a new course context within your current working directory.",
 		Version: pkg.VersionStr,
 		Long: `
-`,
-		SuggestFor: []string{},
-		RunE:       newExec,
+Add creates a new course.json file within your current working directory. This will be used for 
+creating new notes with the correct context for lecturer, course, etc.
+ `,
+		SuggestFor: []string{"courses", "coursemgmt"},
+		RunE:       addExec,
 	}
 
-	newOpts *newCmdOpts
+	addOpts *addCmdOpts
 )
 
-func newExec(cmd *cobra.Command, args []string) error {
-
+func addExec(cmd *cobra.Command, args []string) error {
+	return nil
 }
 
 func init() {
-	set := pflag.NewFlagSet(newCmd.Short, pflag.ExitOnError)
+	set := pflag.NewFlagSet(commitCmd.Short, pflag.ExitOnError)
 
 	o := &newCmdOpts{
 		debug: set.BoolP("debug", "d", false, "Specify whether to run this command in debug mode. This means outputs should not be used, but analysed for debugging purposes."),

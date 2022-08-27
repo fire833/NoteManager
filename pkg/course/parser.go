@@ -16,33 +16,18 @@
 *	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package templates
+package course
 
 import (
-	"embed"
-	"text/template"
-	"time"
-
-	"github.com/Masterminds/sprig/v3"
+	"encoding/json"
+	"os"
 )
 
-//go:embed templates/*
-var note embed.FS
-
-var (
-	noteTmpl *template.Template = template.Must(
-		template.New("note").Funcs(sprig.TxtFuncMap()).ParseFS(note, "templates/*"))
-)
-
-// NoteContext is the context given to the NOte template to be used
-type noteContext struct {
-	CourseName string
-
-	Lecturer string
-
-	Author string
-
-	Year string
-
-	TimeGenerated time.Time
+func ParseCourseCtx() (*CourseContext, error) {
+	if data, e := os.ReadFile("course.json"); e != nil {
+		return nil, e
+	} else {
+		ctx := &CourseContext{}
+		return ctx, json.Unmarshal(data, ctx)
+	}
 }
