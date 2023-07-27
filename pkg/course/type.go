@@ -21,7 +21,6 @@ package course
 import "time"
 
 type CourseContext struct {
-
 	// Title is the title of this course that the notes are a part of.
 	Title string
 

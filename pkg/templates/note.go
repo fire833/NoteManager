@@ -29,10 +29,8 @@ import (
 //go:embed templates/*
 var note embed.FS
 
-var (
-	noteTmpl *template.Template = template.Must(
-		template.New("note").Funcs(sprig.TxtFuncMap()).ParseFS(note, "templates/*"))
-)
+var noteTmpl *template.Template = template.Must(
+	template.New("note").Funcs(sprig.TxtFuncMap()).ParseFS(note, "templates/*"))
 
 // NoteContext is the context given to the NOte template to be used
 type noteContext struct {
