@@ -37,15 +37,13 @@ var (
 		Long: `
 `,
 		SuggestFor: []string{},
-		RunE:       newExec,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return nil
+		},
 	}
 
 	newOpts *newCmdOpts
 )
-
-func newExec(cmd *cobra.Command, args []string) error {
-
-}
 
 func init() {
 	set := pflag.NewFlagSet(newCmd.Short, pflag.ExitOnError)
